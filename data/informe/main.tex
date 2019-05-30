@@ -1,0 +1,40 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{import}
+\usepackage{custom}
+
+\title{Sistema gestión de biblioteca}
+\author{\-\ Ángel Bejar Merma\\
+        \-\ Kelly Ticona Coaguila\\
+        \-\ Paul Salas Nina\\
+        \-\ Jerson Zúñiga Coayla}
+\date{\today}
+
+\makeatletter
+\let\thetitle\@title
+\let\theauthor\@author
+\let\thedate\@date
+\makeatother
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\thetitle}
+\cfoot{\thepage}
+
+\begin{document}
+\renewcommand{\listtablename}{Lista de tablas}
+\renewcommand{\tablename}{Tabla}
+\renewcommand{\listfigurename}{Lista de figuras}
+\renewcommand{\figurename}{Figura}
+
+\import{./}{title.tex}
+
+\tableofcontents
+\pagebreak
+\listoftables
+\pagebreak
+\listoffigures
+\pagebreak
+
+\import{sections/}{introduccion.tex}
+
+\end{document}
