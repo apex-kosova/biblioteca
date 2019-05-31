@@ -7,6 +7,8 @@ figuras/
 *.lot
 *.fls
 *.toc
+*.out
 
 ## Build tool auxiliary files
 *.fdb_latexmk
+*.synctex.gz
