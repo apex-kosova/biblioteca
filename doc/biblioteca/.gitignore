@@ -2,12 +2,11 @@ figuras/
 
 ## Core latex auxiliary files
 *.aux
+*.fls
 *.lof
 *.log
-*.lot
-*.fls
-*.toc
 *.out
+*.toc
 
 ## Build tool auxiliary files
 *.fdb_latexmk
