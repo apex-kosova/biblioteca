@@ -19,6 +19,7 @@ Para acceder a la plataforma de desarrollo dirigirse a la siguiente URL:
 * `Workspace: internal`
 * `Username: admin`
 * `Password: <auto-generada>`
+
 La primera vez se le pedirá que cambie la contraseña por defecto de `admin`.
 ### Conectando a Oracle
 * Hostname: `localhost`
@@ -32,3 +33,4 @@ La primera vez se le pedirá que cambie la contraseña por defecto de `admin`.
 1. Crear tabla Autor y Escribe.
 2. Habilitar selección de varios autores en formulario para agregar libro.
 3. Agregar atributo _estado_ a la tabla Ejemplar.
+4. Crear un _job_ para que envie un mensaje por correo a los alumnos cuyos libros prestados no son devueltos a tiempo.
