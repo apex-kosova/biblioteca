@@ -30,7 +30,6 @@ La primera vez se le pedirá que cambie la contraseña por defecto de `admin`.
 * APEX Admin port: `8080`
 
 ## Lista de tareas pendientes
-1. Crear tabla Autor y Escribe.
-2. Habilitar selección de varios autores en formulario para agregar libro.
-3. Agregar atributo _estado_ a la tabla Ejemplar.
-4. Crear un _job_ para que envie un mensaje por correo a los alumnos cuyos libros prestados no son devueltos a tiempo.
+1. Habilitar selección de varios autores en formulario para agregar libro.
+2. Crear un _job_ para que envie un mensaje por correo a los alumnos cuyos libros prestados no son devueltos a tiempo.
+3. (Mejora) Ejemplares deberían usar números para identificar los _estados_.
