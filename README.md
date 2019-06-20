@@ -28,6 +28,9 @@ La primera vez se le pedirá que cambie la contraseña por defecto de `admin`.
 * PDB: `XEPDB1`
 * OEM port: `5500`
 * APEX Admin port: `8080`
+* sqlplus
+  * user: sys as sysdba
+  * password: n9W5sXF5X0s=1
 
 ## Lista de tareas pendientes
 1. Habilitar selección de varios autores en formulario para agregar libro.
