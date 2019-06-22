@@ -12,7 +12,7 @@ Este proyecto hace uso de una [caja de vagrant](https://github.com/oracle/vagran
 4. Descargar el instalador de APEX de Oracle y guardarlo en la carpeta principal. [https://www.oracle.com/technetwork/developer-tools/apex/downloads/index.html](https://www.oracle.com/technetwork/developer-tools/apex/downloads/index.html)
 5. Descargar el instalador de ORDS y guardarlo en la carpeta principal. [https://www.oracle.com/technetwork/developer-tools/rest-data-services/downloads/index.html](https://www.oracle.com/technetwork/developer-tools/rest-data-services/downloads/index.html)
 6. Ejecutar `vagrant up`.
-### Oracle APEX
+## Oracle APEX
 Para acceder a la plataforma de desarrollo dirigirse a la siguiente URL:
 * `http://localhost:8080/ords/`
 * `Workspace: internal`
