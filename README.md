@@ -12,15 +12,12 @@ Este proyecto hace uso de una [caja de vagrant](https://github.com/oracle/vagran
 4. Descargar el instalador de APEX de Oracle y guardarlo en la carpeta principal. [https://www.oracle.com/technetwork/developer-tools/apex/downloads/index.html](https://www.oracle.com/technetwork/developer-tools/apex/downloads/index.html)
 5. Descargar el instalador de ORDS y guardarlo en la carpeta principal. [https://www.oracle.com/technetwork/developer-tools/rest-data-services/downloads/index.html](https://www.oracle.com/technetwork/developer-tools/rest-data-services/downloads/index.html)
 6. Ejecutar `vagrant up`.
-   1. Guardar la contraseña auto-generada al término de la ejecución de este comando.
 ### Oracle APEX
 Para acceder a la plataforma de desarrollo dirigirse a la siguiente URL:
 * `http://localhost:8080/ords/`
 * `Workspace: internal`
 * `Username: admin`
-* `Password: <autogenerada>`
-
-La primera vez se le pedirá que cambie la contraseña por defecto de `admin`.
+* `Password: <contraseña maestra>`
 ### Conectando a Oracle
 * Hostname: `localhost`
 * Port: `1521`
@@ -28,6 +25,10 @@ La primera vez se le pedirá que cambie la contraseña por defecto de `admin`.
 * PDB: `XEPDB1`
 * OEM port: `5500`
 * APEX Admin port: `8080`
+* Las contraseña maestra es: A%TrabInter%19
+### La máquina virtual
+* Puedes usar `sudo su - oracle` para cambiar al usuario oracle.
+* El directorio de instalación de Oracle es `/opt/oracle/`.
 
 ## Lista de tareas pendientes
 1. Habilitar selección de varios autores en formulario para agregar libro.

@@ -84,9 +84,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "ol7-latest"
   config.vm.box_url = "https://yum.oracle.com/boxes/oraclelinux/latest/ol7-latest.box"
   config.vm.define NAME
-  
+
   config.vm.box_check_update = false
-  
+
   # change memory size
   config.vm.provider "virtualbox" do |v|
     v.memory = 2048
@@ -116,7 +116,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network "forwarded_port", guest: 1521, host: 1521
   config.vm.network "forwarded_port", guest: 5500, host: 5500
   config.vm.network "forwarded_port", guest: 8080, host: 8080
- 
+
   # Provision and update Oracle Linux 7
   config.vm.provision "shell", path: "scripts/install.sh"
 
@@ -125,6 +125,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     {
        "ORACLE_CHARACTERSET" => "AL32UTF8",
        "SYSTEM_TIMEZONE"     => SYSTEM_TIMEZONE
+       "ORACLE_PWD"          => "A%TrabInter%19"
     }
 
   # Provision Oracle Application Expresss on the first run
