@@ -124,7 +124,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "shell", path: "scripts/database.sh", env:
     {
        "ORACLE_CHARACTERSET" => "AL32UTF8",
-       "SYSTEM_TIMEZONE"     => SYSTEM_TIMEZONE
+       "SYSTEM_TIMEZONE"     => SYSTEM_TIMEZONE,
        "ORACLE_PWD"          => "A%TrabInter%19"
     }
 
