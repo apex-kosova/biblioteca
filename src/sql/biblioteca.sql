@@ -1,17 +1,12 @@
-CREATE TABLE alumno (
-    id                NUMBER NOT NULL,
-    cui               CHAR(8) NOT NULL,
-    nombres           VARCHAR2(20) NOT NULL,
-    apellidos         VARCHAR2(20) NOT NULL,
-    email             VARCHAR2(20),
-    fecha_nacimiento  DATE,
-    provincia         VARCHAR2(20),
-    distrito          VARCHAR2(20),
-    avcallejiron      VARCHAR2(20)
+CREATE TABLE autor (
+	id			NUMBER NOT NULL,
+	nombres		VARCHAR2(20) NOT NULL,
+	apellidos	VARCHAR2(20) NOT NULL,
+	fecha_nacimiento	DATE,
+	nacionalidad		VARCHAR2(20)
 );
 
-ALTER TABLE alumno ADD CONSTRAINT alumno_pk PRIMARY KEY ( id );
-ALTER TABLE alumno ADD CONSTRAINT alumno_uk UNIQUE ( cui );
+ALTER TABLE autor ADD CONSTRAINT autor_pk PRIMARY KEY ( id );
 
 CREATE TABLE categoria (
     id       NUMBER NOT NULL,
@@ -28,33 +23,49 @@ CREATE TABLE editorial (
 
 ALTER TABLE editorial ADD CONSTRAINT editorial_pk PRIMARY KEY ( id );
 
-CREATE TABLE ejemplar (
-    id           NUMBER NOT NULL,
-    libro_id	 NUMBER NOT NULL
-);
-
-ALTER TABLE ejemplar ADD CONSTRAINT ejemplar_pk PRIMARY KEY ( id );
-
-CREATE TABLE grupo (
-    id       NUMBER NOT NULL,
-    nombre   VARCHAR2(20) NOT NULL
-);
-
-ALTER TABLE grupo ADD CONSTRAINT grupo_pk PRIMARY KEY ( id );
-
 CREATE TABLE libro (
     id                NUMBER NOT NULL,
     isbn              CHAR(10) NOT NULL,
-    autor             VARCHAR2(40),
     titulo            VARCHAR2(40) NOT NULL,
     fecha_publicacion DATE,
-    descripcion       VARCHAR2(50),
+    descripcion       VARCHAR2(200),
     editorial_id      NUMBER NOT NULL,
     categoria_id      NUMBER NOT NULL
 );
 
 ALTER TABLE libro ADD CONSTRAINT libro_pk PRIMARY KEY ( id );
 ALTER TABLE libro ADD CONSTRAINT libro_uk UNIQUE ( isbn );
+
+CREATE TABLE escribe (
+	id			NUMBER NOT NULL,
+	autor_id	NUMBER NOT NULL,
+	libro_id	NUMBER NOT NULL
+);
+
+ALTER TABLE escribe ADD CONSTRAINT escribe_pk PRIMARY KEY ( id );
+
+CREATE TABLE ejemplar (
+    id           NUMBER NOT NULL,
+    libro_id	 NUMBER NOT NULL,
+    estado       NUMBER DEFAULT (1)
+);
+
+ALTER TABLE ejemplar ADD CONSTRAINT ejemplar_pk PRIMARY KEY ( id );
+
+CREATE TABLE alumno (
+    id                NUMBER NOT NULL,
+    cui               CHAR(8) NOT NULL,
+    nombres           VARCHAR2(20) NOT NULL,
+    apellidos         VARCHAR2(20) NOT NULL,
+    email             VARCHAR2(40) NOT NULL,
+    fecha_nacimiento  DATE,
+    provincia         VARCHAR2(40),
+    distrito          VARCHAR2(40),
+    avcallejiron      VARCHAR2(40)
+);
+
+ALTER TABLE alumno ADD CONSTRAINT alumno_pk PRIMARY KEY ( id );
+ALTER TABLE alumno ADD CONSTRAINT alumno_uk UNIQUE ( cui );
 
 CREATE TABLE prestamo (
     id                NUMBER NOT NULL,
@@ -74,6 +85,13 @@ CREATE TABLE sancion (
 
 ALTER TABLE sancion ADD CONSTRAINT sancion_pk PRIMARY KEY ( id );
 
+CREATE TABLE grupo (
+    id       NUMBER NOT NULL,
+    nombre   VARCHAR2(20) NOT NULL
+);
+
+ALTER TABLE grupo ADD CONSTRAINT grupo_pk PRIMARY KEY ( id );
+
 CREATE TABLE usuario (
     id           NUMBER NOT NULL,
     nombre       VARCHAR2(10),
@@ -86,6 +104,14 @@ ALTER TABLE usuario ADD CONSTRAINT usuario_pk PRIMARY KEY ( id );
 ALTER TABLE ejemplar
     ADD CONSTRAINT ejemplar_libro_fk FOREIGN KEY ( libro_id )
         REFERENCES libro ( id );
+
+ALTER TABLE escribe
+	ADD CONSTRAINT escribe_autor_fk FOREIGN KEY ( autor_id )
+		REFERENCES autor ( id );
+
+ALTER TABLE escribe
+	ADD CONSTRAINT escribe_libro_fk FOREIGN KEY ( libro_id )
+		REFERENCES libro ( id );
 
 ALTER TABLE libro
     ADD CONSTRAINT libro_categoria_fk FOREIGN KEY (categoria_id )
@@ -111,14 +137,25 @@ ALTER TABLE usuario
     ADD CONSTRAINT grupo_usuario_fk FOREIGN KEY ( grupo_id )
         REFERENCES grupo ( id );
 
-CREATE SEQUENCE libro_id_seq START WITH 1 NOCACHE ORDER;
+CREATE SEQUENCE alumno_id_seq START WITH 1 NOCACHE ORDER;
 
-CREATE OR REPLACE TRIGGER libro_id_trg BEFORE
-    INSERT ON libro
+CREATE OR REPLACE TRIGGER alumno_id_trg BEFORE
+    INSERT ON alumno
     FOR EACH ROW
     WHEN ( new.id IS NULL )
 BEGIN
-    :new.id := libro_id_seq.nextval;
+    :new.id := alumno_id_seq.nextval;
+END;
+/
+
+CREATE SEQUENCE autor_id_seq START WITH 1 NOCACHE ORDER;
+
+CREATE OR REPLACE TRIGGER autor_id_trg BEFORE
+	INSERT ON autor
+	FOR EACH ROW
+	WHEN ( new.id IS NULL )
+BEGIN
+	:new.id := autor_id_seq.nextval;
 END;
 /
 
@@ -155,6 +192,17 @@ BEGIN
 END;
 /
 
+CREATE SEQUENCE escribe_id_seq START WITH 1 NOCACHE ORDER;
+
+CREATE OR REPLACE TRIGGER escribe_id_trg BEFORE
+	INSERT ON escribe
+	FOR EACH ROW
+	WHEN ( new.id IS NULL )
+BEGIN
+	:new.id := escribe_id_seq.nextval;
+END;
+/
+
 CREATE SEQUENCE grupo_id_seq START WITH 1 NOCACHE ORDER;
 
 CREATE OR REPLACE TRIGGER grupo_id_trg BEFORE
@@ -166,14 +214,14 @@ BEGIN
 END;
 /
 
-CREATE SEQUENCE alumno_id_seq START WITH 1 NOCACHE ORDER;
+CREATE SEQUENCE libro_id_seq START WITH 1 NOCACHE ORDER;
 
-CREATE OR REPLACE TRIGGER alumno_id_trg BEFORE
-    INSERT ON alumno
+CREATE OR REPLACE TRIGGER libro_id_trg BEFORE
+    INSERT ON libro
     FOR EACH ROW
     WHEN ( new.id IS NULL )
 BEGIN
-    :new.id := alumno_id_seq.nextval;
+    :new.id := libro_id_seq.nextval;
 END;
 /
 
@@ -207,5 +255,16 @@ CREATE OR REPLACE TRIGGER usuario_id_trg BEFORE
     WHEN ( new.id IS NULL )
 BEGIN
     :new.id := usuario_id_seq.nextval;
+END;
+/
+
+CREATE OR REPLACE TRIGGER prestamo_after_insert
+AFTER INSERT
+	ON prestamo
+	FOR EACH ROW
+DECLARE
+BEGIN
+UPDATE
+	ejemplar set estado = 2 where id = :new.EJEMPLAR_ID;
 END;
 /
