@@ -1,76 +1,79 @@
-drop TABLE "AUTOR"
+drop TABLE "BIBLIO_AUTOR"
 cascade constraints
 /
 
-drop TABLE "CATEGORIA"
+drop TABLE "BIBLIO_CATEGORIA"
 cascade constraints
 /
 
-drop TABLE "EDITORIAL"
+drop TABLE "BIBLIO_EDITORIAL"
 cascade constraints
 /
 
-drop TABLE "LIBRO"
+drop TABLE "BIBLIO_LIBRO"
 cascade constraints
 /
 
-drop TABLE "ESCRIBE"
+drop TABLE "BIBLIO_ESCRIBE"
 cascade constraints
 /
 
-drop TABLE "EJEMPLAR"
+drop TABLE "BIBLIO_EJEMPLAR"
 cascade constraints
 /
 
-drop TABLE "ALUMNO"
+drop TABLE "BIBLIO_ALUMNO"
 cascade constraints
 /
 
-drop TABLE "PRESTAMO"
+drop TABLE "BIBLIO_PRESTAMO"
 cascade constraints
 /
 
-drop TABLE "SANCION"
+drop TABLE "BIBLIO_SANCION"
 cascade constraints
 /
 
-drop TABLE "GRUPO"
+drop TABLE "BIBLIO_GRUPO"
 cascade constraints
 /
 
-drop TABLE "USUARIO"
+drop TABLE "BIBLIO_USUARIO"
 cascade constraints
 /
 
-drop SEQUENCE "ALUMNO_ID_SEQ"
+drop SEQUENCE "BIBLIO_ALUMNO_ID_SEQ"
 /
 
-drop SEQUENCE "AUTOR_ID_SEQ"
+drop SEQUENCE "BIBLIO_AUTOR_ID_SEQ"
 /
 
-drop SEQUENCE "CATEGORIA_ID_SEQ"
+drop SEQUENCE "BIBLIO_CATEGORIA_ID_SEQ"
 /
 
-drop SEQUENCE "EDITORIAL_ID_SEQ"
+drop SEQUENCE "BIBLIO_EDITORIAL_ID_SEQ"
 /
 
-drop SEQUENCE "EJEMPLAR_ID_SEQ"
+drop SEQUENCE "BIBLIO_EJEMPLAR_ID_SEQ"
 /
 
-drop SEQUENCE "ESCRIBE_ID_SEQ"
+drop SEQUENCE "BIBLIO_ESCRIBE_ID_SEQ"
 /
 
-drop SEQUENCE "GRUPO_ID_SEQ"
+drop SEQUENCE "BIBLIO_GRUPO_ID_SEQ"
 /
 
-drop SEQUENCE "LIBRO_ID_SEQ"
+drop SEQUENCE "BIBLIO_LIBRO_ID_SEQ"
 /
 
-drop SEQUENCE "PRESTAMO_ID_SEQ"
+drop SEQUENCE "BIBLIO_PRESTAMO_ID_SEQ"
 /
 
-drop SEQUENCE "SANCION_ID_SEQ"
+drop SEQUENCE "BIBLIO_SANCION_ID_SEQ"
 /
 
-drop SEQUENCE "USUARIO_ID_SEQ"
+drop SEQUENCE "BIBLIO_USUARIO_ID_SEQ"
+/
+
+drop PROCEDURE "BIBLIO_SEND_LIBROS_PRESTADOS"
 /

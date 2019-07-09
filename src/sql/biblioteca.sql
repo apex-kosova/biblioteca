@@ -1,4 +1,4 @@
-CREATE TABLE autor (
+CREATE TABLE biblio_autor (
 	id			NUMBER NOT NULL,
 	nombres		VARCHAR2(20) NOT NULL,
 	apellidos	VARCHAR2(20) NOT NULL,
@@ -6,53 +6,53 @@ CREATE TABLE autor (
 	nacionalidad		VARCHAR2(20)
 );
 
-ALTER TABLE autor ADD CONSTRAINT autor_pk PRIMARY KEY ( id );
+ALTER TABLE biblio_autor ADD CONSTRAINT biblio_autor_pk PRIMARY KEY ( id );
 
-CREATE TABLE categoria (
+CREATE TABLE biblio_categoria (
     id       NUMBER NOT NULL,
     nombre   VARCHAR2(20) NOT NULL
 );
 
-ALTER TABLE categoria ADD CONSTRAINT categoria_pk PRIMARY KEY ( id );
+ALTER TABLE biblio_categoria ADD CONSTRAINT biblio_categoria_pk PRIMARY KEY ( id );
 
-CREATE TABLE editorial (
+CREATE TABLE biblio_editorial (
     id           NUMBER NOT NULL,
     nombre       VARCHAR2(20) NOT NULL,
     direccion    VARCHAR2(40) NOT NULL
 );
 
-ALTER TABLE editorial ADD CONSTRAINT editorial_pk PRIMARY KEY ( id );
+ALTER TABLE biblio_editorial ADD CONSTRAINT biblio_editorial_pk PRIMARY KEY ( id );
 
-CREATE TABLE libro (
+CREATE TABLE biblio_libro (
     id                NUMBER NOT NULL,
     isbn              CHAR(10) NOT NULL,
     titulo            VARCHAR2(40) NOT NULL,
     fecha_publicacion DATE,
     descripcion       VARCHAR2(200),
-    editorial_id      NUMBER NOT NULL,
-    categoria_id      NUMBER NOT NULL
+    biblio_editorial_id      NUMBER NOT NULL,
+    biblio_categoria_id      NUMBER NOT NULL
 );
 
-ALTER TABLE libro ADD CONSTRAINT libro_pk PRIMARY KEY ( id );
-ALTER TABLE libro ADD CONSTRAINT libro_uk UNIQUE ( isbn );
+ALTER TABLE biblio_libro ADD CONSTRAINT biblio_libro_pk PRIMARY KEY ( id );
+ALTER TABLE biblio_libro ADD CONSTRAINT biblio_libro_uk UNIQUE ( isbn );
 
-CREATE TABLE escribe (
+CREATE TABLE biblio_escribe (
 	id			NUMBER NOT NULL,
-	autor_id	NUMBER NOT NULL,
-	libro_id	NUMBER NOT NULL
+	biblio_autor_id	NUMBER NOT NULL,
+	biblio_libro_id	NUMBER NOT NULL
 );
 
-ALTER TABLE escribe ADD CONSTRAINT escribe_pk PRIMARY KEY ( id );
+ALTER TABLE biblio_escribe ADD CONSTRAINT biblio_escribe_pk PRIMARY KEY ( id );
 
-CREATE TABLE ejemplar (
+CREATE TABLE biblio_ejemplar (
     id           NUMBER NOT NULL,
-    libro_id	 NUMBER NOT NULL,
+    biblio_libro_id	 NUMBER NOT NULL,
     estado       NUMBER DEFAULT (1)
 );
 
-ALTER TABLE ejemplar ADD CONSTRAINT ejemplar_pk PRIMARY KEY ( id );
+ALTER TABLE biblio_ejemplar ADD CONSTRAINT biblio_ejemplar_pk PRIMARY KEY ( id );
 
-CREATE TABLE alumno (
+CREATE TABLE biblio_alumno (
     id                NUMBER NOT NULL,
     cui               CHAR(8) NOT NULL,
     nombres           VARCHAR2(20) NOT NULL,
@@ -64,207 +64,238 @@ CREATE TABLE alumno (
     avcallejiron      VARCHAR2(40)
 );
 
-ALTER TABLE alumno ADD CONSTRAINT alumno_pk PRIMARY KEY ( id );
-ALTER TABLE alumno ADD CONSTRAINT alumno_uk UNIQUE ( cui );
+ALTER TABLE biblio_alumno ADD CONSTRAINT biblio_alumno_pk PRIMARY KEY ( id );
+ALTER TABLE biblio_alumno ADD CONSTRAINT biblio_alumno_uk UNIQUE ( cui );
 
-CREATE TABLE prestamo (
+CREATE TABLE biblio_prestamo (
     id                NUMBER NOT NULL,
     fecha_entrega     DATE NOT NULL,
     fecha_devolucion  DATE NOT NULL,
     comentarios       VARCHAR2(50),
-    ejemplar_id       NUMBER NOT NULL,
-    alumno_id         NUMBER NOT NULL
+    biblio_ejemplar_id       NUMBER NOT NULL,
+    biblio_alumno_id         NUMBER NOT NULL
 );
 
-ALTER TABLE prestamo ADD CONSTRAINT prestamo_pk PRIMARY KEY ( id );
+ALTER TABLE biblio_prestamo ADD CONSTRAINT biblio_prestamo_pk PRIMARY KEY ( id );
 
-CREATE TABLE sancion (
+CREATE TABLE biblio_sancion (
     id           NUMBER NOT NULL,
-    alumno_id    NUMBER NOT NULL
+    biblio_alumno_id    NUMBER NOT NULL
 );
 
-ALTER TABLE sancion ADD CONSTRAINT sancion_pk PRIMARY KEY ( id );
+ALTER TABLE biblio_sancion ADD CONSTRAINT biblio_sancion_pk PRIMARY KEY ( id );
 
-CREATE TABLE grupo (
+CREATE TABLE biblio_grupo (
     id       NUMBER NOT NULL,
     nombre   VARCHAR2(20) NOT NULL
 );
 
-ALTER TABLE grupo ADD CONSTRAINT grupo_pk PRIMARY KEY ( id );
+ALTER TABLE biblio_grupo ADD CONSTRAINT biblio_grupo_pk PRIMARY KEY ( id );
 
-CREATE TABLE usuario (
+CREATE TABLE biblio_usuario (
     id           NUMBER NOT NULL,
     nombre       VARCHAR2(10),
     contrasena   VARCHAR2(10),
-    grupo_id	 NUMBER NOT NULL
+    biblio_grupo_id	 NUMBER NOT NULL
 );
 
-ALTER TABLE usuario ADD CONSTRAINT usuario_pk PRIMARY KEY ( id );
+ALTER TABLE biblio_usuario ADD CONSTRAINT biblio_usuario_pk PRIMARY KEY ( id );
 
-ALTER TABLE ejemplar
-    ADD CONSTRAINT ejemplar_libro_fk FOREIGN KEY ( libro_id )
-        REFERENCES libro ( id );
+ALTER TABLE biblio_ejemplar
+    ADD CONSTRAINT biblio_ejemplar_biblio_libro_fk FOREIGN KEY ( biblio_libro_id )
+        REFERENCES biblio_libro ( id );
 
-ALTER TABLE escribe
-	ADD CONSTRAINT escribe_autor_fk FOREIGN KEY ( autor_id )
-		REFERENCES autor ( id );
+ALTER TABLE biblio_escribe
+	ADD CONSTRAINT biblio_escribe_biblio_autor_fk FOREIGN KEY ( biblio_autor_id )
+		REFERENCES biblio_autor ( id );
 
-ALTER TABLE escribe
-	ADD CONSTRAINT escribe_libro_fk FOREIGN KEY ( libro_id )
-		REFERENCES libro ( id );
+ALTER TABLE biblio_escribe
+	ADD CONSTRAINT biblio_escribe_biblio_libro_fk FOREIGN KEY ( biblio_libro_id )
+		REFERENCES biblio_libro ( id );
 
-ALTER TABLE libro
-    ADD CONSTRAINT libro_categoria_fk FOREIGN KEY (categoria_id )
-        REFERENCES categoria ( id );
+ALTER TABLE biblio_libro
+    ADD CONSTRAINT biblio_libro_biblio_categoria_fk FOREIGN KEY (biblio_categoria_id )
+        REFERENCES biblio_categoria ( id );
 
-ALTER TABLE libro
-    ADD CONSTRAINT libro_editorial_fk FOREIGN KEY ( editorial_id )
-        REFERENCES editorial ( id );
+ALTER TABLE biblio_libro
+    ADD CONSTRAINT biblio_libro_biblio_editorial_fk FOREIGN KEY ( biblio_editorial_id )
+        REFERENCES biblio_editorial ( id );
 
-ALTER TABLE prestamo
-    ADD CONSTRAINT prestamo_alumno_fk FOREIGN KEY ( alumno_id )
-        REFERENCES alumno ( id );
+ALTER TABLE biblio_prestamo
+    ADD CONSTRAINT biblio_prestamo_biblio_alumno_fk FOREIGN KEY ( biblio_alumno_id )
+        REFERENCES biblio_alumno ( id );
 
-ALTER TABLE prestamo
-    ADD CONSTRAINT prestamo_ejemplar_fk FOREIGN KEY ( ejemplar_id )
-        REFERENCES ejemplar ( id );
+ALTER TABLE biblio_prestamo
+    ADD CONSTRAINT biblio_prestamo_biblio_ejemplar_fk FOREIGN KEY ( biblio_ejemplar_id )
+        REFERENCES biblio_ejemplar ( id );
 
-ALTER TABLE sancion
-    ADD CONSTRAINT sancion_alumno_fk FOREIGN KEY ( alumno_id )
-        REFERENCES alumno ( id );
+ALTER TABLE biblio_sancion
+    ADD CONSTRAINT biblio_sancion_biblio_alumno_fk FOREIGN KEY ( biblio_alumno_id )
+        REFERENCES biblio_alumno ( id );
 
-ALTER TABLE usuario
-    ADD CONSTRAINT grupo_usuario_fk FOREIGN KEY ( grupo_id )
-        REFERENCES grupo ( id );
+ALTER TABLE biblio_usuario
+    ADD CONSTRAINT biblio_grupo_biblio_usuario_fk FOREIGN KEY ( biblio_grupo_id )
+        REFERENCES biblio_grupo ( id );
 
-CREATE SEQUENCE alumno_id_seq START WITH 1 NOCACHE ORDER;
+CREATE SEQUENCE biblio_alumno_id_seq START WITH 1 NOCACHE ORDER;
 
-CREATE OR REPLACE TRIGGER alumno_id_trg BEFORE
-    INSERT ON alumno
+CREATE OR REPLACE TRIGGER biblio_alumno_id_trg BEFORE
+    INSERT ON biblio_alumno
     FOR EACH ROW
     WHEN ( new.id IS NULL )
 BEGIN
-    :new.id := alumno_id_seq.nextval;
+    :new.id := biblio_alumno_id_seq.nextval;
 END;
 /
 
-CREATE SEQUENCE autor_id_seq START WITH 1 NOCACHE ORDER;
+CREATE SEQUENCE biblio_autor_id_seq START WITH 1 NOCACHE ORDER;
 
-CREATE OR REPLACE TRIGGER autor_id_trg BEFORE
-	INSERT ON autor
+CREATE OR REPLACE TRIGGER biblio_autor_id_trg BEFORE
+	INSERT ON biblio_autor
 	FOR EACH ROW
 	WHEN ( new.id IS NULL )
 BEGIN
-	:new.id := autor_id_seq.nextval;
+	:new.id := biblio_autor_id_seq.nextval;
 END;
 /
 
-CREATE SEQUENCE categoria_id_seq START WITH 1 NOCACHE ORDER;
+CREATE SEQUENCE biblio_categoria_id_seq START WITH 1 NOCACHE ORDER;
 
-CREATE OR REPLACE TRIGGER categoria_id_trg BEFORE
-    INSERT ON categoria
+CREATE OR REPLACE TRIGGER biblio_categoria_id_trg BEFORE
+    INSERT ON biblio_categoria
     FOR EACH ROW
     WHEN ( new.id IS NULL )
 BEGIN
-    :new.id := categoria_id_seq.nextval;
+    :new.id := biblio_categoria_id_seq.nextval;
 END;
 /
 
-CREATE SEQUENCE editorial_id_seq START WITH 1 NOCACHE ORDER;
+CREATE SEQUENCE biblio_editorial_id_seq START WITH 1 NOCACHE ORDER;
 
-CREATE OR REPLACE TRIGGER editorial_id_trg BEFORE
-    INSERT ON editorial
+CREATE OR REPLACE TRIGGER biblio_editorial_id_trg BEFORE
+    INSERT ON biblio_editorial
     FOR EACH ROW
     WHEN ( new.id IS NULL )
 BEGIN
-    :new.id := editorial_id_seq.nextval;
+    :new.id := biblio_editorial_id_seq.nextval;
 END;
 /
 
-CREATE SEQUENCE ejemplar_id_seq START WITH 1 NOCACHE ORDER;
+CREATE SEQUENCE biblio_ejemplar_id_seq START WITH 1 NOCACHE ORDER;
 
-CREATE OR REPLACE TRIGGER ejemplar_id_trg BEFORE
-    INSERT ON ejemplar
+CREATE OR REPLACE TRIGGER biblio_ejemplar_id_trg BEFORE
+    INSERT ON biblio_ejemplar
     FOR EACH ROW
     WHEN ( new.id IS NULL )
 BEGIN
-    :new.id := ejemplar_id_seq.nextval;
+    :new.id := biblio_ejemplar_id_seq.nextval;
 END;
 /
 
-CREATE SEQUENCE escribe_id_seq START WITH 1 NOCACHE ORDER;
+CREATE SEQUENCE biblio_escribe_id_seq START WITH 1 NOCACHE ORDER;
 
-CREATE OR REPLACE TRIGGER escribe_id_trg BEFORE
-	INSERT ON escribe
+CREATE OR REPLACE TRIGGER biblio_escribe_id_trg BEFORE
+	INSERT ON biblio_escribe
 	FOR EACH ROW
 	WHEN ( new.id IS NULL )
 BEGIN
-	:new.id := escribe_id_seq.nextval;
+	:new.id := biblio_escribe_id_seq.nextval;
 END;
 /
 
-CREATE SEQUENCE grupo_id_seq START WITH 1 NOCACHE ORDER;
+CREATE SEQUENCE biblio_grupo_id_seq START WITH 1 NOCACHE ORDER;
 
-CREATE OR REPLACE TRIGGER grupo_id_trg BEFORE
-    INSERT ON grupo
+CREATE OR REPLACE TRIGGER biblio_grupo_id_trg BEFORE
+    INSERT ON biblio_grupo
     FOR EACH ROW
     WHEN ( new.id IS NULL )
 BEGIN
-    :new.id := grupo_id_seq.nextval;
+    :new.id := biblio_grupo_id_seq.nextval;
 END;
 /
 
-CREATE SEQUENCE libro_id_seq START WITH 1 NOCACHE ORDER;
+CREATE SEQUENCE biblio_libro_id_seq START WITH 1 NOCACHE ORDER;
 
-CREATE OR REPLACE TRIGGER libro_id_trg BEFORE
-    INSERT ON libro
+CREATE OR REPLACE TRIGGER biblio_libro_id_trg BEFORE
+    INSERT ON biblio_libro
     FOR EACH ROW
     WHEN ( new.id IS NULL )
 BEGIN
-    :new.id := libro_id_seq.nextval;
+    :new.id := biblio_libro_id_seq.nextval;
 END;
 /
 
-CREATE SEQUENCE prestamo_id_seq START WITH 1 NOCACHE ORDER;
+CREATE SEQUENCE biblio_prestamo_id_seq START WITH 1 NOCACHE ORDER;
 
-CREATE OR REPLACE TRIGGER prestamo_id_trg BEFORE
-    INSERT ON prestamo
+CREATE OR REPLACE TRIGGER biblio_prestamo_id_trg BEFORE
+    INSERT ON biblio_prestamo
     FOR EACH ROW
     WHEN ( new.id IS NULL )
 BEGIN
-    :new.id := prestamo_id_seq.nextval;
+    :new.id := biblio_prestamo_id_seq.nextval;
 END;
 /
 
-CREATE SEQUENCE sancion_id_seq START WITH 1 NOCACHE ORDER;
+CREATE SEQUENCE biblio_sancion_id_seq START WITH 1 NOCACHE ORDER;
 
-CREATE OR REPLACE TRIGGER sancion_id_trg BEFORE
-    INSERT ON sancion
+CREATE OR REPLACE TRIGGER biblio_sancion_id_trg BEFORE
+    INSERT ON biblio_sancion
     FOR EACH ROW
     WHEN ( new.id IS NULL )
 BEGIN
-    :new.id := sancion_id_seq.nextval;
+    :new.id := biblio_sancion_id_seq.nextval;
 END;
 /
 
-CREATE SEQUENCE usuario_id_seq START WITH 1 NOCACHE ORDER;
+CREATE SEQUENCE biblio_usuario_id_seq START WITH 1 NOCACHE ORDER;
 
-CREATE OR REPLACE TRIGGER usuario_id_trg BEFORE
-    INSERT ON usuario
+CREATE OR REPLACE TRIGGER biblio_usuario_id_trg BEFORE
+    INSERT ON biblio_usuario
     FOR EACH ROW
     WHEN ( new.id IS NULL )
 BEGIN
-    :new.id := usuario_id_seq.nextval;
+    :new.id := biblio_usuario_id_seq.nextval;
 END;
 /
 
-CREATE OR REPLACE TRIGGER prestamo_after_insert
+CREATE OR REPLACE TRIGGER biblio_prestamo_after_insert
 AFTER INSERT
-	ON prestamo
+	ON biblio_prestamo
 	FOR EACH ROW
 DECLARE
 BEGIN
 UPDATE
-	ejemplar set estado = 2 where id = :new.EJEMPLAR_ID;
+	biblio_ejemplar set estado = 2 where id = :new.biblio_ejemplar_ID;
 END;
 /
+
+CREATE OR REPLACE PROCEDURE "BIBLIO_SEND_LIBROS_PRESTADOS"
+IS
+BEGIN
+  FOR c1 IN (SELECT e.id
+             ,      p.biblio_alumno_id
+             ,      TO_CHAR(p.fecha_devolucion, 'DD MONTH "del" YYYY') due_date
+             FROM biblio_prestamo p
+             ,    biblio_ejemplar e
+             WHERE p.biblio_ejemplar_id = e.id
+             AND   TRUNC(p.fecha_devolucion) < SYSDATE
+             AND   e.estado = 2
+            ) LOOP
+    FOR c2 IN (SELECT nombres
+               ,      email
+               FROM biblio_alumno a
+               WHERE a.id = c1.biblio_alumno_id
+               AND   a.email IS NOT NULL
+              ) LOOP
+      apex_mail.send (
+        p_to                 => c2.email,
+        p_template_static_id => 'PRESTADOS',
+        p_placeholders       => '{' ||
+        '    "APPLICATION_LINK":' || apex_json.stringify( apex_util.prepare_url(p_url => 'f?p=:'||v('APP_ID')||':1:' )) ||
+        '   ,"DUE_DATE":'         || apex_json.stringify( c1.due_date ) ||
+        '   ,"INVITEE":'          || apex_json.stringify( c2.nombres ) ||
+        '   ,"biblio_libro":'            || apex_json.stringify( c1.id ) ||
+        '}' );
+    END LOOP;
+  END LOOP;
+END;
