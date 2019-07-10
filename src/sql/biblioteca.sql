@@ -49,7 +49,7 @@ ALTER TABLE bib_escribe ADD CONSTRAINT bib_escribe_pk PRIMARY KEY ( id );
 
 CREATE TABLE bib_ejemplar (
     id      NUMBER NOT NULL,
-    estado  NUMBER DEFAULT (1),
+    estado  NUMBER DEFAULT ON NULL 1,
     bib_libro_id NUMBER NOT NULL
 );
 
