@@ -1,12 +1,12 @@
 CREATE TABLE bib_autor (
-	id			NUMBER NOT NULL,
-	nombres		VARCHAR2(20) NOT NULL,
-	apellidos	VARCHAR2(20) NOT NULL,
-	fecha_nacimiento	DATE,
-	nacionalidad		VARCHAR2(20)
+	id      NUMBER NOT NULL,
+	nombre  VARCHAR2(40) NOT NULL,
+	fecha_ncmto    DATE,
+	pais_natal     VARCHAR2(20)
 );
 
 ALTER TABLE bib_autor ADD CONSTRAINT bib_autor_pk PRIMARY KEY ( id );
+ALTER TABLE bib_autor ADD CONSTRAINT bib_autor_uk UNIQUE ( nombre );
 
 CREATE TABLE bib_categoria (
     id       NUMBER NOT NULL,
@@ -14,14 +14,17 @@ CREATE TABLE bib_categoria (
 );
 
 ALTER TABLE bib_categoria ADD CONSTRAINT bib_categoria_pk PRIMARY KEY ( id );
+ALTER TABLE bib_categoria ADD CONSTRAINT bib_categoria_uk UNIQUE ( nombre );
 
 CREATE TABLE bib_editorial (
     id           NUMBER NOT NULL,
     nombre       VARCHAR2(20) NOT NULL,
-    direccion    VARCHAR2(40) NOT NULL
+    direccion    VARCHAR2(40),
+    telefono      VARCHAR2(9)
 );
 
 ALTER TABLE bib_editorial ADD CONSTRAINT bib_editorial_pk PRIMARY KEY ( id );
+ALTER TABLE bib_editorial ADD CONSTRAINT bib_editorial_uk UNIQUE ( nombre );
 
 CREATE TABLE bib_libro (
     id                NUMBER NOT NULL,
@@ -45,9 +48,9 @@ CREATE TABLE bib_escribe (
 ALTER TABLE bib_escribe ADD CONSTRAINT bib_escribe_pk PRIMARY KEY ( id );
 
 CREATE TABLE bib_ejemplar (
-    id           NUMBER NOT NULL,
-    bib_libro_id	 NUMBER NOT NULL,
-    estado       NUMBER DEFAULT (1)
+    id      NUMBER NOT NULL,
+    estado  NUMBER DEFAULT (1),
+    bib_libro_id NUMBER NOT NULL
 );
 
 ALTER TABLE bib_ejemplar ADD CONSTRAINT bib_ejemplar_pk PRIMARY KEY ( id );
@@ -58,10 +61,12 @@ CREATE TABLE bib_alumno (
     nombres           VARCHAR2(20) NOT NULL,
     apellidos         VARCHAR2(20) NOT NULL,
     email             VARCHAR2(40) NOT NULL,
+    celular           VARCHAR2(9),
     fecha_nacimiento  DATE,
     provincia         VARCHAR2(40),
     distrito          VARCHAR2(40),
-    avcallejiron      VARCHAR2(40)
+    avcallejiron      VARCHAR2(40),
+    acerca_de         VARCHAR2(200)
 );
 
 ALTER TABLE bib_alumno ADD CONSTRAINT bib_alumno_pk PRIMARY KEY ( id );
@@ -91,15 +96,17 @@ CREATE TABLE bib_grupo (
 );
 
 ALTER TABLE bib_grupo ADD CONSTRAINT bib_grupo_pk PRIMARY KEY ( id );
+ALTER TABLE bib_grupo ADD CONSTRAINT bib_grupo_uk UNIQUE ( nombre );
 
 CREATE TABLE bib_usuario (
     id           NUMBER NOT NULL,
-    nombre       VARCHAR2(10),
-    contrasena   VARCHAR2(10),
+    nombre       VARCHAR2(10) NOT NULL,
+    contrasena   VARCHAR2(10) NOT NULL,
     bib_grupo_id	 NUMBER NOT NULL
 );
 
 ALTER TABLE bib_usuario ADD CONSTRAINT bib_usuario_pk PRIMARY KEY ( id );
+ALTER TABLE bib_usuario ADD CONSTRAINT bib_usuario_uk UNIQUE ( nombre );
 
 ALTER TABLE bib_ejemplar
     ADD CONSTRAINT bib_ejemplar_bib_libro_fk FOREIGN KEY ( bib_libro_id )
