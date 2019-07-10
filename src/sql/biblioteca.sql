@@ -281,6 +281,7 @@ IS
 BEGIN
   FOR c1 IN (SELECT e.id
              ,      p.bib_alumno_id
+             ,      TO_CHAR(p.fecha_entrega, 'DD "de" MONTH') start_time
              ,      TO_CHAR(p.fecha_devolucion, 'DD MONTH "del" YYYY') due_date
              FROM bib_prestamo p
              ,    bib_ejemplar e
@@ -299,9 +300,10 @@ BEGIN
         p_template_static_id => 'PRESTADOS',
         p_placeholders       => '{' ||
         '    "APPLICATION_LINK":' || apex_json.stringify( apex_util.prepare_url(p_url => 'f?p=:'||v('APP_ID')||':1:' )) ||
+        '   ,"START_DATE":'       || apex_json.stringify( c1.start_time ) ||
         '   ,"DUE_DATE":'         || apex_json.stringify( c1.due_date ) ||
         '   ,"INVITEE":'          || apex_json.stringify( c2.nombres ) ||
-        '   ,"bib_libro":'            || apex_json.stringify( c1.id ) ||
+        '   ,"BIB_LIBRO":'        || apex_json.stringify( c1.id ) ||
         '}' );
     END LOOP;
   END LOOP;
