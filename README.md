@@ -32,5 +32,4 @@ Para acceder a la plataforma de desarrollo dirigirse a la siguiente URL:
 
 ## Lista de tareas pendientes
 1. Habilitar selección de varios autores en formulario para agregar libro.
-2. Crear un _job_ para que envie un mensaje por correo a los alumnos cuyos libros prestados no son devueltos a tiempo.
-3. (Mejora) Ejemplares deberían usar números para identificar los _estados_.
+2. Tabla _escribe_ debería tener como única fila (entrada) la combinación de *autor_id* y *libro_id*.
